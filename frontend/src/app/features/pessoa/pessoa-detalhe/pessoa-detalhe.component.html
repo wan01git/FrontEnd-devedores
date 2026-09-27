@@ -1,0 +1,113 @@
+@if (carregando()) {
+  <main class="pagina">
+    <p class="mensagem">carregando...</p>
+  </main>
+} @else if (erro()) {
+  <main class="pagina">
+    <p class="mensagem mensagem--erro">{{ erro() }}</p>
+  </main>
+} @else if (pessoa()) {
+  @if (pessoa(); as p) {
+  <main class="pagina">
+    <a class="voltar" routerLink="/">&larr; voltar</a>
+
+    <section class="cabecalho-pessoa">
+      <h1 class="cabecalho-pessoa__nome">{{ p.nome }}</h1>
+      <p class="cabecalho-pessoa__saldo"
+         [class.cabecalho-pessoa__saldo--credito]="p.saldo > 0"
+         [class.cabecalho-pessoa__saldo--debito]="p.saldo < 0"
+         [appCountUp]="p.saldo">R$ 0,00</p>
+      <p class="cabecalho-pessoa__legenda">
+        @if (p.saldo > 0) {
+          esta pessoa te deve
+        } @else if (p.saldo < 0) {
+          você deve para esta pessoa
+        } @else {
+          contas em dia
+        }
+      </p>
+    </section>
+
+    <section class="filtro">
+      <form class="filtro__form" [formGroup]="formFiltro" (ngSubmit)="aplicarFiltro()">
+        <label class="filtro__campo">
+          <span>de</span>
+          <input type="date" formControlName="inicio" />
+        </label>
+        <label class="filtro__campo">
+          <span>até</span>
+          <input type="date" formControlName="fim" />
+        </label>
+        <button type="submit" class="botao-link">filtrar</button>
+        <button type="button" class="botao-link" (click)="limparFiltro()">limpar</button>
+      </form>
+    </section>
+
+    <section class="lancamentos">
+      <div class="lancamentos__cabecalho">
+        <h2 class="lancamentos__titulo">Lançamentos</h2>
+        @if (!mostrarFormNovoLancamento()) {
+          <button type="button" class="botao-link" (click)="abrirFormNovoLancamento()">+ novo lançamento</button>
+        }
+      </div>
+
+      @if (mostrarFormNovoLancamento()) {
+        <form class="form-lancamento" [formGroup]="formLancamento" (ngSubmit)="salvarLancamento()">
+          <div class="form-lancamento__linha">
+            <label class="form-lancamento__tipo">
+              <input type="radio" formControlName="tipo" value="A_RECEBER" /> a receber
+            </label>
+            <label class="form-lancamento__tipo">
+              <input type="radio" formControlName="tipo" value="A_PAGAR" /> a pagar
+            </label>
+          </div>
+
+          <div class="form-lancamento__linha">
+            <input class="form-lancamento__input" type="number" step="0.01" min="0.01"
+                   placeholder="valor" formControlName="valor" />
+            <input class="form-lancamento__input" type="date" formControlName="dataLancamento" />
+          </div>
+
+          <input class="form-lancamento__input form-lancamento__input--full" type="text"
+                 placeholder="descrição (opcional)" formControlName="descricao" />
+
+          @if (formLancamento.controls.valor.errors?.['servidor']) {
+            <span class="form-lancamento__erro">{{ formLancamento.controls.valor.errors?.['servidor'] }}</span>
+          }
+
+          <div class="form-lancamento__acoes">
+            <button type="submit" class="botao botao--pequeno" [disabled]="salvando()">
+              {{ salvando() ? 'salvando...' : 'salvar' }}
+            </button>
+            <button type="button" class="botao-link" (click)="cancelarNovoLancamento()">cancelar</button>
+          </div>
+        </form>
+      }
+
+      @if (lancamentos().length === 0) {
+        <p class="mensagem">nenhum lançamento neste período.</p>
+      } @else {
+        <ul class="lista-lancamentos">
+          @for (lancamento of lancamentos(); track lancamento.id) {
+            <li class="linha-lancamento">
+              <div class="linha-lancamento__info">
+                <span class="linha-lancamento__data">{{ lancamento.dataLancamento }}</span>
+                <span class="linha-lancamento__descricao">{{ lancamento.descricao || '(sem descrição)' }}</span>
+              </div>
+              <span class="linha-lancamento__valor"
+                    [class.linha-lancamento__valor--credito]="lancamento.tipo === 'A_RECEBER'"
+                    [class.linha-lancamento__valor--debito]="lancamento.tipo === 'A_PAGAR'">
+                {{ lancamento.tipo === 'A_PAGAR' ? '-' : '+' }}{{ lancamento.valor | moeda }}
+              </span>
+              <button type="button" class="excluir" [disabled]="excluindoId() === lancamento.id"
+                      (click)="excluirLancamento(lancamento.id)" aria-label="excluir lançamento">
+                &times;
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+  </main>
+  }
+}

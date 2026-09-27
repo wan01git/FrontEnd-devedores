@@ -1,0 +1,77 @@
+@if (carregando()) {
+  <main class="pagina">
+    <p class="mensagem">carregando...</p>
+  </main>
+} @else if (erro()) {
+  <main class="pagina">
+    <p class="mensagem mensagem--erro">{{ erro() }}</p>
+  </main>
+} @else if (dashboard()) {
+  @if (dashboard(); as d) {
+  <main class="pagina">
+
+    <section class="razao">
+      <p class="razao__rotulo">Saldo geral</p>
+      <p class="razao__valor"
+         [class.razao__valor--credito]="d.saldoGeral > 0"
+         [class.razao__valor--debito]="d.saldoGeral < 0"
+         [appCountUp]="d.saldoGeral">R$ 0,00</p>
+      <div class="razao__regra"></div>
+
+      <div class="totais">
+        <div class="totais__item">
+          <span class="totais__rotulo">a receber</span>
+          <span class="totais__valor totais__valor--credito" [appCountUp]="d.totalAReceber">R$ 0,00</span>
+        </div>
+        <div class="totais__item">
+          <span class="totais__rotulo">a pagar</span>
+          <span class="totais__valor totais__valor--debito" [appCountUp]="d.totalAPagar">R$ 0,00</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="pessoas">
+      <div class="pessoas__cabecalho">
+        <h2 class="pessoas__titulo">Pessoas</h2>
+        @if (!mostrarFormNovaPessoa()) {
+          <button type="button" class="botao-link" (click)="abrirFormNovaPessoa()">+ nova pessoa</button>
+        }
+      </div>
+
+      @if (mostrarFormNovaPessoa()) {
+        <form class="form-pessoa" [formGroup]="formNovaPessoa" (ngSubmit)="criarPessoa()">
+          <input class="form-pessoa__input" type="text" placeholder="nome da pessoa" formControlName="nome" />
+          <button type="submit" class="botao botao--pequeno" [disabled]="criandoPessoa()">
+            {{ criandoPessoa() ? 'salvando...' : 'salvar' }}
+          </button>
+          <button type="button" class="botao-link" (click)="cancelarNovaPessoa()">cancelar</button>
+
+          @if (formNovaPessoa.controls.nome.errors?.['servidor']) {
+            <span class="form-pessoa__erro">{{ formNovaPessoa.controls.nome.errors?.['servidor'] }}</span>
+          }
+        </form>
+      }
+
+      @if (d.pessoas.length === 0) {
+        <p class="mensagem">nenhuma pessoa cadastrada ainda.</p>
+      } @else {
+        <ul class="lista-pessoas">
+          @for (pessoa of d.pessoas; track pessoa.id) {
+            <li class="linha-pessoa">
+              <a class="linha-pessoa__link" [routerLink]="['/pessoas', pessoa.id]">
+                <span class="linha-pessoa__nome">{{ pessoa.nome }}</span>
+                <span class="linha-pessoa__saldo"
+                      [class.linha-pessoa__saldo--credito]="pessoa.saldo > 0"
+                      [class.linha-pessoa__saldo--debito]="pessoa.saldo < 0">
+                  {{ pessoa.saldo | moeda }}
+                </span>
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+
+  </main>
+  }
+}

@@ -1,0 +1,203 @@
+.pagina {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--espaco-6) var(--espaco-5);
+}
+
+.mensagem {
+  color: var(--cor-tinta-suave);
+  font-size: 14px;
+
+  &--erro {
+    color: var(--cor-debito);
+  }
+}
+
+// --- Saldo geral -----------------------------------------------------
+.razao {
+  margin-bottom: var(--espaco-6);
+
+  &__rotulo {
+    font-size: 14px;
+    color: var(--cor-tinta-suave);
+    margin: 0 0 var(--espaco-2);
+  }
+
+  &__valor {
+    font-family: var(--fonte-numerica);
+    font-variant-numeric: tabular-nums;
+    font-size: 48px;
+    font-weight: 500;
+    margin: 0 0 var(--espaco-3);
+    line-height: 1;
+    color: var(--cor-tinta);
+    transition: color 200ms ease;
+
+    &--credito { color: var(--cor-credito); }
+    &--debito { color: var(--cor-debito); }
+  }
+
+  &__regra {
+    height: 2px;
+    background: var(--cor-tinta);
+    width: 120px;
+    margin-bottom: var(--espaco-4);
+  }
+}
+
+.totais {
+  display: flex;
+  gap: var(--espaco-5);
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-1);
+  }
+
+  &__rotulo {
+    font-size: 12px;
+    color: var(--cor-tinta-suave);
+    text-transform: lowercase;
+  }
+
+  &__valor {
+    font-family: var(--fonte-numerica);
+    font-variant-numeric: tabular-nums;
+    font-size: 18px;
+    font-weight: 500;
+
+    &--credito { color: var(--cor-credito); }
+    &--debito { color: var(--cor-debito); }
+  }
+}
+
+// --- Pessoas -----------------------------------------------------------
+.pessoas {
+  &__cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--espaco-3);
+  }
+
+  &__titulo {
+    font-size: 18px;
+  }
+}
+
+.botao-link {
+  font-family: var(--fonte-interface);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cor-acao);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.form-pessoa {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--espaco-4);
+  padding: var(--espaco-3);
+  background: var(--cor-papel-elevado);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-borda);
+
+  &__input {
+    flex: 1;
+    min-width: 160px;
+    font-family: var(--fonte-interface);
+    font-size: 14px;
+    padding: var(--espaco-2);
+    border: none;
+    border-bottom: 1px solid var(--cor-linha);
+    background: transparent;
+    color: var(--cor-tinta);
+
+    &:focus {
+      outline: none;
+      border-bottom-color: var(--cor-acao);
+    }
+  }
+
+  &__erro {
+    flex-basis: 100%;
+    font-size: 12px;
+    color: var(--cor-debito);
+  }
+}
+
+.botao {
+  font-family: var(--fonte-interface);
+  font-weight: 500;
+  color: var(--cor-papel);
+  background: var(--cor-acao);
+  border: none;
+  border-radius: var(--raio-borda);
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 100ms ease;
+
+  &:hover:not(:disabled) { background: var(--cor-acao-hover); }
+  &:active:not(:disabled) { transform: scale(0.97); }
+  &:disabled { opacity: 0.6; cursor: default; }
+
+  &--pequeno {
+    font-size: 13px;
+    padding: var(--espaco-2) var(--espaco-3);
+  }
+}
+
+// Cada pessoa como uma linha pautada de ledger — a régua horizontal separa
+// uma "conta" da outra, igual página de razão contábil.
+.lista-pessoas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.linha-pessoa {
+  border-bottom: 1px solid var(--cor-linha);
+
+  &:first-child { border-top: 1px solid var(--cor-linha); }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--espaco-3) var(--espaco-1);
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left 150ms ease, background-color 150ms ease;
+
+    // Pequeno detalhe: a linha "desliza" um pouco ao passar o mouse, como
+    // se você estivesse apontando o dedo na página do razão para ler.
+    &:hover {
+      padding-left: var(--espaco-3);
+      background: var(--cor-papel-elevado);
+    }
+  }
+
+  &__nome {
+    font-size: 15px;
+  }
+
+  &__saldo {
+    font-family: var(--fonte-numerica);
+    font-variant-numeric: tabular-nums;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--cor-tinta-suave);
+
+    &--credito { color: var(--cor-credito); }
+    &--debito { color: var(--cor-debito); }
+  }
+}

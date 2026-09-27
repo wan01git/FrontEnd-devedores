@@ -1,0 +1,8 @@
+<header class="cabecalho">
+  <span class="cabecalho__marca">Caderneta</span>
+  @if (estaAutenticado()) {
+    <button type="button" class="cabecalho__sair" (click)="sair()">Sair</button>
+  }
+</header>
+
+<router-outlet></router-outlet>

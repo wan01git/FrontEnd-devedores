@@ -1,0 +1,262 @@
+.pagina {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--espaco-6) var(--espaco-5);
+}
+
+.mensagem {
+  color: var(--cor-tinta-suave);
+  font-size: 14px;
+
+  &--erro { color: var(--cor-debito); }
+}
+
+.voltar {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--cor-acao);
+  text-decoration: none;
+  margin-bottom: var(--espaco-4);
+
+  &:hover { text-decoration: underline; }
+}
+
+// --- Cabeçalho da pessoa -------------------------------------------------
+.cabecalho-pessoa {
+  margin-bottom: var(--espaco-5);
+
+  &__nome {
+    font-size: 22px;
+    margin-bottom: var(--espaco-2);
+  }
+
+  &__saldo {
+    font-family: var(--fonte-numerica);
+    font-variant-numeric: tabular-nums;
+    font-size: 36px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--cor-tinta);
+    transition: color 200ms ease;
+
+    &--credito { color: var(--cor-credito); }
+    &--debito { color: var(--cor-debito); }
+  }
+
+  &__legenda {
+    font-size: 13px;
+    color: var(--cor-tinta-suave);
+    margin: var(--espaco-1) 0 0;
+  }
+}
+
+// --- Filtro por período --------------------------------------------------
+.filtro {
+  margin-bottom: var(--espaco-5);
+  padding-bottom: var(--espaco-4);
+  border-bottom: 1px solid var(--cor-linha);
+
+  &__form {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-3);
+    flex-wrap: wrap;
+  }
+
+  &__campo {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-1);
+    font-size: 13px;
+    color: var(--cor-tinta-suave);
+
+    input {
+      font-family: var(--fonte-interface);
+      font-size: 13px;
+      padding: var(--espaco-1) var(--espaco-2);
+      border: none;
+      border-bottom: 1px solid var(--cor-linha);
+      background: transparent;
+      color: var(--cor-tinta);
+
+      &:focus {
+        outline: none;
+        border-bottom-color: var(--cor-acao);
+      }
+    }
+  }
+}
+
+// --- Lançamentos -----------------------------------------------------
+.lancamentos {
+  &__cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--espaco-3);
+  }
+
+  &__titulo {
+    font-size: 18px;
+  }
+}
+
+.botao-link {
+  font-family: var(--fonte-interface);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cor-acao);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover { text-decoration: underline; }
+}
+
+.form-lancamento {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  margin-bottom: var(--espaco-4);
+  padding: var(--espaco-3);
+  background: var(--cor-papel-elevado);
+  border: 1px solid var(--cor-linha);
+  border-radius: var(--raio-borda);
+
+  &__linha {
+    display: flex;
+    gap: var(--espaco-3);
+    flex-wrap: wrap;
+  }
+
+  &__tipo {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-1);
+    font-size: 13px;
+    cursor: pointer;
+
+    input { accent-color: var(--cor-acao); }
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 140px;
+    font-family: var(--fonte-interface);
+    font-size: 14px;
+    padding: var(--espaco-2);
+    border: none;
+    border-bottom: 1px solid var(--cor-linha);
+    background: transparent;
+    color: var(--cor-tinta);
+
+    &--full { flex-basis: 100%; }
+
+    &:focus {
+      outline: none;
+      border-bottom-color: var(--cor-acao);
+    }
+  }
+
+  &__erro {
+    font-size: 12px;
+    color: var(--cor-debito);
+  }
+
+  &__acoes {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-3);
+  }
+}
+
+.botao {
+  font-family: var(--fonte-interface);
+  font-weight: 500;
+  color: var(--cor-papel);
+  background: var(--cor-acao);
+  border: none;
+  border-radius: var(--raio-borda);
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 100ms ease;
+
+  &:hover:not(:disabled) { background: var(--cor-acao-hover); }
+  &:active:not(:disabled) { transform: scale(0.97); }
+  &:disabled { opacity: 0.6; cursor: default; }
+
+  &--pequeno {
+    font-size: 13px;
+    padding: var(--espaco-2) var(--espaco-3);
+  }
+}
+
+// Cada lançamento como uma linha de razão — data + descrição à esquerda,
+// valor alinhado à direita em fonte tabular (mono), sinal de + ou -
+// deixando explícito o efeito no saldo sem precisar ler a cor.
+.lista-lancamentos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.linha-lancamento {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3) var(--espaco-1);
+  border-bottom: 1px solid var(--cor-linha);
+
+  &:first-child { border-top: 1px solid var(--cor-linha); }
+
+  &__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__data {
+    font-size: 12px;
+    color: var(--cor-tinta-suave);
+  }
+
+  &__descricao {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__valor {
+    font-family: var(--fonte-numerica);
+    font-variant-numeric: tabular-nums;
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+
+    &--credito { color: var(--cor-credito); }
+    &--debito { color: var(--cor-debito); }
+  }
+}
+
+.excluir {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--cor-tinta-suave);
+  background: none;
+  border: none;
+  border-radius: var(--raio-borda);
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+
+  &:hover:not(:disabled) {
+    color: var(--cor-debito);
+    background: var(--cor-debito-superficie);
+  }
+
+  &:disabled { opacity: 0.4; cursor: default; }
+}

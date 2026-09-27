@@ -1,0 +1,40 @@
+@use 'styles/tokens';
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: var(--cor-papel);
+  color: var(--cor-tinta);
+  font-family: var(--fonte-interface);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--fonte-display);
+  font-weight: 600;
+  margin: 0;
+}
+
+// Foco de teclado sempre visível — acessibilidade não é opcional
+:focus-visible {
+  outline: 2px solid var(--cor-acao);
+  outline-offset: 2px;
+}
+
+// Respeita quem prefere menos animação no sistema operacional
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

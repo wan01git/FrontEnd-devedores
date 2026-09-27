@@ -1,0 +1,61 @@
+// Tokens de design da "Caderneta" — todo valor de cor/tipografia/espaçamento
+// usado nos componentes deve vir daqui, nunca um hex solto espalhado pelos
+// arquivos .scss dos componentes. Isso é o que garante consistência visual
+// conforme o app cresce.
+
+:root {
+  // --- Cor ---------------------------------------------------------------
+  // Papel envelhecido, não o bege-cream genérico: mais escuro e amarelado.
+  --cor-papel: #EDE6D6;
+  --cor-papel-elevado: #F5F0E5; // superfícies "acima" do papel (cards, modais)
+
+  // Tinta preta-esverdeada — o texto principal nunca é #000 puro.
+  --cor-tinta: #1F2A24;
+  --cor-tinta-suave: #5B6560; // texto secundário
+
+  // Linhas de pauta, como papel de razão contábil
+  --cor-linha: #C9BEA6;
+
+  // Semânticas: crédito (a receber) e débito (a pagar) — "estar no vermelho"
+  --cor-credito: #2F6F5E;
+  --cor-credito-superficie: #E1EBE4;
+  --cor-debito: #A83232;
+  --cor-debito-superficie: #F3E2DE;
+
+  // Ação primária — um terceiro tom neutro, para não sobrecarregar o
+  // vermelho/verde semântico com o significado extra de "botão principal"
+  --cor-acao: #33415C;
+  --cor-acao-hover: #26314A;
+
+  // --- Tipografia ----------------------------------------------------------
+  --fonte-display: 'Fraunces', serif;          // títulos, números grandes
+  --fonte-interface: 'IBM Plex Sans', sans-serif; // textos de UI
+  --fonte-numerica: 'IBM Plex Mono', monospace;   // valores monetários
+
+  // --- Espaçamento -----------------------------------------------------
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 16px;
+  --espaco-4: 24px;
+  --espaco-5: 32px;
+  --espaco-6: 48px;
+
+  --raio-borda: 3px; // sutil — não é o "card totalmente arredondado" padrão
+}
+
+// Tema escuro: o navegador/SO decide, respeitando a preferência da pessoa
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cor-papel: #1B1F1C;
+    --cor-papel-elevado: #232824;
+    --cor-tinta: #EDE6D6;
+    --cor-tinta-suave: #9AA39C;
+    --cor-linha: #3A4038;
+    --cor-credito: #6FBF9E;
+    --cor-credito-superficie: #223229;
+    --cor-debito: #E28B7D;
+    --cor-debito-superficie: #3A2624;
+    --cor-acao: #8FA6D1;
+    --cor-acao-hover: #B0C2E0;
+  }
+}
